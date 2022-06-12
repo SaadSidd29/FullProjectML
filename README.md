@@ -52,3 +52,23 @@ To check remote url
 To check current branch 
 
 1. git branch
+
+Diff 
+
+1. git diff
+
+
+To setup CI/CD pipeline in heroku we need 3 info
+
+1. HEROKU_EMAIL=saad.sidd29@gmail.com
+2. HEROKU_API_KEY=2d4ccb31-c6ac-45a8-b900-4ef793a5e380
+3. HEROKU_APP_NAME=ml-ful-deploy
+
+
+Create a docker file and dockerignore file
+
+Build docker image
+
+1. docker build -t <img-name>:<tag-name> .
+
+> Note : Image name for docer must be small case
