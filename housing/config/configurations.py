@@ -3,6 +3,7 @@ from housing.util.util import read_yaml_file
 import os,sys
 from housing.logger import logging
 from housing.constant import *
+from housing.exception import HousingException
 
 class Configuration:
     def __init__(self,
@@ -28,13 +29,13 @@ class Configuration:
                 self.time_stamp
             )
 
-            data_ingestion_info=self.config_info['DATA_INGESTION_CONFIG_KEY']
+            data_ingestion_info=self.config_info[DATA_INGESTION_CONFIG_KEY]
 
-            dataset_download_url = data_ingestion_info['DATA_INGESTION_DOWNLAOD_URL_KEY']
-            tgz_download_dir = os.path.join(data_ingestion_artifact_dir,data_ingestion_info['DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY'])
-            raw_data_dir = os.path.join(data_ingestion_artifact_dir,data_ingestion_info['DATA_INGESTION_RAW_DATA_DIR_KEY'])
-            ingested_train_dir = os.path.join(data_ingestion_artifact_dir,DATA_INGESTION_DIR_NAME_KEY,data_ingestion_info['DATA_INGESTION_TRAIN_DIR_KEY'])
-            ingested_test_dir = os.path.join(data_ingestion_artifact_dir,DATA_INGESTION_DIR_NAME_KEY,data_ingestion_info['DATA_INGESTION_TEST_DIR_KEY'])
+            dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLAOD_URL_KEY]
+            tgz_download_dir = os.path.join(data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY])
+            raw_data_dir = os.path.join(data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_RAW_DATA_DIR_KEY])
+            ingested_train_dir = os.path.join(data_ingestion_artifact_dir,DATA_INGESTION_DIR_NAME_KEY,data_ingestion_info[DATA_INGESTION_TRAIN_DIR_KEY])
+            ingested_test_dir = os.path.join(data_ingestion_artifact_dir,DATA_INGESTION_DIR_NAME_KEY,data_ingestion_info[DATA_INGESTION_TEST_DIR_KEY])
 
             data_ingestion_config = DataIngestionConfig(dataset_download_url = dataset_download_url,
                                                         tgz_download_dir = tgz_download_dir, 
@@ -77,15 +78,15 @@ class Configuration:
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
         try:
-            training_pipleline_config=self.config_info['TRAINING_PIPELINE_CONFIG_KEY']
+            training_pipeline_config=self.config_info[TRAINING_PIPELINE_CONFIG_KEY]
             artifact_dir = os.path.join(
                                         ROOT_DIR,
-                                        training_pipleline_config['TRAINING_PIPELINE_NAME_KEY'],
-                                        training_pipleline_config['TRAINING_PIPELINE_ARTIFACT_DIRECTORY_KEY']
+                                        training_pipeline_config[TRAINING_PIPELINE_NAME_KEY],
+                                        training_pipeline_config[TRAINING_PIPELINE_ARTIFACT_DIRECTORY_KEY]
                                         )
 
-            training_pipleline_config = TrainingPipelineConfig(artifact_dir=artifact_dir)
+            training_pipeline_config = TrainingPipelineConfig(artifact_dir=artifact_dir)
             logging.info("Training Pipeline Config: {training_pipleline_config}")
-            return training_pipleline_config
+            return training_pipeline_config
         except Exception as e:
             raise HousingException(e,sys) from e
