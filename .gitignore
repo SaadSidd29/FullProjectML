@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Ignore downloaded file and spiltted file
+
+.tgz
+.csv
+
+# Ignore output folder
+
+housing/artifact
